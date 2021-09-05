@@ -54,8 +54,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 // let url = 'https://kape-plan-bank-default-rtdb.firebaseio.com/plan-bank'
 let url = 'https://kape-plan-bank-default-rtdb.firebaseio.com/plan-bank'
 

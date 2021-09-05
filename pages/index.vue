@@ -27,8 +27,7 @@
 </template>
 
 <script>
-import axios from "axios";
-
+const axios = require('axios')
 const TARGET_SAVED_HEIGHT = 250;
 
 let url = "https://kape-plan-bank-default-rtdb.firebaseio.com/plan-bank/";
