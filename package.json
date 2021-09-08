@@ -12,6 +12,7 @@
     "@nuxtjs/axios": "^5.13.6",
     "axios": "^0.21.3",
     "core-js": "^3.15.1",
+    "firebase": "^9.0.1",
     "modern-css-reset": "^1.4.0",
     "node-sass": "^4.14.1",
     "nuxt": "^2.15.7"

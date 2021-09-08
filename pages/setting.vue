@@ -54,7 +54,8 @@
 </template>
 
 <script>
-// let url = 'https://kape-plan-bank-default-rtdb.firebaseio.com/plan-bank'
+const axios = require('axios')
+
 let url = 'https://kape-plan-bank-default-rtdb.firebaseio.com/plan-bank'
 
 export default {
@@ -77,40 +78,36 @@ export default {
   },
   methods: {
     addData: function () {
-      // let addUrl = url + '/' + 2 + '.json'
+      let addUrl = url + '/' + 2 + '.json'
       let data = {
-        colors: this.colors
-        // weekdays: this.weekdays,
-        // targetSaved: this.targetSaved,
-        // savedName: this.savedName,
-        // unitRepetition: this.unitRepetition,
-        // monthRepetiton: this.monthRepetiton,
-        // oneTimeSaved: this.oneTimeSaved
+        'colors': this.colors,
+        'weekdays': this.weekdays,
+        'targetSaved': this.targetSaved,
+        'savedName': this.savedName,
+        'unitRepetition': this.unitRepetition,
+        'monthRepetiton': this.monthRepetiton,
+        'oneTimeSaved': this.oneTimeSaved
       }
-      axios.post(url, data
-      )
-      // .then(re => {
-      //   console.log(re)
-      //   this.colors = ''
-      //   this.weekdays = ''
-      //   this.targetSaved = 0
-      //   this.savedName = ''
-      //   this.unitRepetition = ''
-      //   this.monthRepetiton = ''
-      //   this.oneTimeSaved = 0
-      // })
+      axios.put(addUrl, data).then((re) => {
+        this.colors = ''
+        this.weekdays = ''
+        this.targetSaved = 0
+        this.savedName = ''
+        this.unitRepetition = ''
+        this.monthRepetiton = ''
+        this.oneTimeSaved = 0
+        this.getData()
+      })
+    },
+    getData: function () {
+      axios.get(url + '.json').then((res) => {
+        this.json_data = res.data
+        console.log('this.json_data:', this.json_data)
+      })
     }
-  //   getData: function () {
-  //     axios.get(url + '.json').then(res => {
-  //       this.json_data = res.data
-  //       console.log('this.json_data:', this.json_data)
-  //     }).catch(err => {
-  //       console.log(err)
-  //     })
-  //   }
-  // },
-  // created: function () {
-  //   this.getData()
+  },
+  created: function () {
+    this.getData()
   }
 }
 </script>
