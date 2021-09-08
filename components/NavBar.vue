@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav>
-      <ul>
+      <ul role="list">
         <li><nuxt-link to="/">つもり貯金</nuxt-link></li>
         <li><nuxt-link to="/setting">貯金箱設定</nuxt-link></li>
         <li><nuxt-link to="/history">履歴</nuxt-link></li>
