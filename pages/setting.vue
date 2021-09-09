@@ -54,9 +54,7 @@
 </template>
 
 <script>
-const axios = require('axios')
-
-let url = 'https://kape-plan-bank-default-rtdb.firebaseio.com/plan-bank'
+import firebase from '@/plugin/firebase'
 
 export default {
   id: 'setting',
@@ -78,7 +76,7 @@ export default {
   },
   methods: {
     addData: function () {
-      let addUrl = url + '/' + 2 + '.json'
+      let Ref = firebase.database().ref()
       let data = {
         'colors': this.colors,
         'weekdays': this.weekdays,
@@ -88,26 +86,20 @@ export default {
         'monthRepetiton': this.monthRepetiton,
         'oneTimeSaved': this.oneTimeSaved
       }
-      axios.put(addUrl, data).then((re) => {
-        this.colors = ''
-        this.weekdays = ''
-        this.targetSaved = 0
-        this.savedName = ''
-        this.unitRepetition = ''
-        this.monthRepetiton = ''
-        this.oneTimeSaved = 0
-        this.getData()
+      Ref.push({ data }).then(response => {
+          console.log(response)
       })
     },
-    getData: function () {
-      axios.get(url + '.json').then((res) => {
-        this.json_data = res.data
-        console.log('this.json_data:', this.json_data)
-      })
-    }
-  },
-  created: function () {
-    this.getData()
+    // getData: function () {
+//       axios.get(url + '.json').then((res) => {
+//         this.json_data = res.data
+//         console.log('this.json_data:', this.json_data)
+//       })
+//     }
+//   },
+//   created: function () {
+//     this.getData()
+//   }
   }
 }
 </script>
