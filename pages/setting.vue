@@ -48,13 +48,12 @@
     <label for="one_time_saved">1回の貯金額</label>
     <input type="number" id="one_time_saved" v-model="oneTimeSaved">
   </fieldset>
-  <button @click="addData">Click</button>
+  <button @click="addData()">Click</button>
   <p>{{ colors }}</p>
 </form>
 </template>
 
 <script>
-import firebase from '@/plugin/firebase'
 
 export default {
   id: 'setting',
@@ -75,8 +74,7 @@ export default {
     }
   },
   methods: {
-    addData: function () {
-      let Ref = firebase.database().ref()
+    async addData() {
       let data = {
         'colors': this.colors,
         'weekdays': this.weekdays,
@@ -86,10 +84,10 @@ export default {
         'monthRepetiton': this.monthRepetiton,
         'oneTimeSaved': this.oneTimeSaved
       }
-      Ref.push({ data }).then(response => {
+      await this.$fire.database.push( config.authDomain, data ).then(response => {
           console.log(response)
       })
-    },
+    }
     // getData: function () {
 //       axios.get(url + '.json').then((res) => {
 //         this.json_data = res.data

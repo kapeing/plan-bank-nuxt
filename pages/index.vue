@@ -27,10 +27,7 @@
 </template>
 
 <script>
-const axios = require('axios')
 const TARGET_SAVED_HEIGHT = 250;
-
-let url = "https://kape-plan-bank-default-rtdb.firebaseio.com/plan-bank/";
 
 export default {
   name: "Top",
@@ -71,18 +68,9 @@ export default {
   methods: {
     graphHeight(currentSaved, targetSaved) {
       return (currentSaved * TARGET_SAVED_HEIGHT) / targetSaved + "px";
-    },
-    getData: function() {
-      let idUrl = url + 1 + ".json";
-      axios.get(idUrl).then(res => {
-        this.json_data = res.data;
-      });
     }
-  },
-  created: function() {
-    this.getData();
   }
-};
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
