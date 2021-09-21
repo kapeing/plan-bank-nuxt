@@ -54,6 +54,7 @@
 </template>
 
 <script>
+import firebase from '@/plugins/firebase'
 
 export default {
   id: 'setting',
@@ -74,7 +75,8 @@ export default {
     }
   },
   methods: {
-    async addData() {
+    addData() {
+      let Ref = firebase.database().ref()
       let data = {
         'colors': this.colors,
         'weekdays': this.weekdays,
@@ -84,7 +86,7 @@ export default {
         'monthRepetiton': this.monthRepetiton,
         'oneTimeSaved': this.oneTimeSaved
       }
-      await this.$fire.database.push( config.authDomain, data ).then(response => {
+      Ref.push( data ).then(response => {
           console.log(response)
       })
     }
