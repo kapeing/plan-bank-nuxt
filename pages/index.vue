@@ -68,7 +68,13 @@ export default {
   methods: {
     graphHeight(currentSaved, targetSaved) {
       return (currentSaved * TARGET_SAVED_HEIGHT) / targetSaved + "px";
-    }
+    },
+    fetchData () {
+     let Ref = firebase.database().ref('/plan-bank')
+     Ref.on('value', function(snapshot){
+       document.getElementById("user.name").innerHTML = snapshot.child("name").val()
+     })
+   },
   }
 }
 </script>
