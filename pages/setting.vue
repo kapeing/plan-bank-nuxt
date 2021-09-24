@@ -48,7 +48,7 @@
     <label for="one_time_saved">1回の貯金額</label>
     <input type="number" id="one_time_saved" v-model="oneTimeSaved">
   </fieldset>
-  <button @click="addData()">Click</button>
+  <button @click="addData()" :disabled="isOver3">Click</button>
   <p>{{ colors }}</p>
 </form>
 </template>
@@ -71,7 +71,30 @@ export default {
       unitRepetition: '',
       monthRepetiton: '',
       oneTimeSaved: 0,
-      json_data: {}
+      json_data: {},
+      more3: false
+    }
+  },
+  mounted: function() {
+    // console.log('this.isOver3():', this.isOver3())
+  },
+  computed: {
+    async isOver3() {
+      let Ref = firebase.database().ref()
+      const snapshot = await Ref.on('value')
+      const recentData = snapshot.val()
+      const len = Object.keys(recentData).length
+      console.log('len:', len)
+      console.log('lenOver:', len > 3 ? true : false )
+      return len > 3 ? true : false
+      
+      //  await Ref.on('value', function(snapshot){
+      //   const recentData = snapshot.val()
+      //   const len = Object.keys(recentData).length
+      //   console.log('len:', len)
+      //   console.log('lenOver:', len > 3 ? true : false )
+      //   return len > 3 ? true : false
+      // })
     }
   },
   methods: {
@@ -89,17 +112,7 @@ export default {
       Ref.push( data ).then(response => {
           console.log(response)
       })
-    }
-    // getData: function () {
-//       axios.get(url + '.json').then((res) => {
-//         this.json_data = res.data
-//         console.log('this.json_data:', this.json_data)
-//       })
-//     }
-//   },
-//   created: function () {
-//     this.getData()
-//   }
+    },
   }
 }
 </script>

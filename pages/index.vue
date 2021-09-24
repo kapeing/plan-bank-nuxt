@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import firebase from '@/plugins/firebase'
 const TARGET_SAVED_HEIGHT = 250;
 
 export default {
@@ -69,12 +70,14 @@ export default {
     graphHeight(currentSaved, targetSaved) {
       return (currentSaved * TARGET_SAVED_HEIGHT) / targetSaved + "px";
     },
-    fetchData () {
-     let Ref = firebase.database().ref('/plan-bank')
-     Ref.on('value', function(snapshot){
-       document.getElementById("user.name").innerHTML = snapshot.child("name").val()
-     })
-   },
+    // fetchData () {
+    //  let Ref = firebase.database().ref()
+    //  Ref.on('value', function(snapshot){
+    //    const data = snapshot.val()
+    //    const len = Object.keys(data).length
+    //    len > 3 ? true : false 
+    //  })
+  //  },
   }
 }
 </script>
