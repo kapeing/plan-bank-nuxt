@@ -48,7 +48,7 @@
     <label for="one_time_saved">1回の貯金額</label>
     <input type="number" id="one_time_saved" v-model="oneTimeSaved">
   </fieldset>
-  <button @click="addData()" :disabled="isOver3">Click</button>
+  <button @click="addData()" :disabled="disableClickButton">Click</button>
   <p>{{ colors }}</p>
 </form>
 </template>
@@ -72,31 +72,19 @@ export default {
       monthRepetiton: '',
       oneTimeSaved: 0,
       json_data: {},
-      more3: false
-    }
+      disableClickButton: undefined,
+      }
   },
   mounted: function() {
-    // console.log('this.isOver3():', this.isOver3())
+    this.DBArrayLength()
   },
-  computed: {
-    async isOver3() {
-      let Ref = firebase.database().ref()
-      const snapshot = await Ref.on('value')
-      const recentData = snapshot.val()
-      const len = Object.keys(recentData).length
-      console.log('len:', len)
-      console.log('lenOver:', len > 3 ? true : false )
-      return len > 3 ? true : false
-      
-      //  await Ref.on('value', function(snapshot){
-      //   const recentData = snapshot.val()
-      //   const len = Object.keys(recentData).length
-      //   console.log('len:', len)
-      //   console.log('lenOver:', len > 3 ? true : false )
-      //   return len > 3 ? true : false
-      // })
-    }
-  },
+  // computed: {
+  //   disableClickButton() {
+  //     let result = this.DBArrayLength()
+  //     console.log('result:', result)
+  //     return result
+  //   },
+  // },
   methods: {
     addData() {
       let Ref = firebase.database().ref()
@@ -113,6 +101,38 @@ export default {
           console.log(response)
       })
     },
+    DBArrayLength() {
+      let Ref = firebase.database().ref()
+      Ref.on('value', function(snapshot){
+        const recentData = snapshot.val()
+        const len = Object.keys(recentData).length
+        console.log('len:', len)
+        console.log('lenOver:', len > 3 ? false : true )
+        if (len >= 3) {
+          console.log('set true !!')
+          this.disableClickButton = true
+        } else {
+          this.disableClickButton = false
+        }
+      })
+    },
+    // DBArrayLength() {
+    //   return new Promise((resolve, reject) => {
+    //     let Ref = firebase.database().ref()
+    //     Ref.on('value', function(snapshot){
+    //       const recentData = snapshot.val()
+    //       const len = Object.keys(recentData).length
+    //       // console.log('len:', len)
+    //       // console.log('lenOver:', len > 3 ? false : true )
+    //       return len > 3 ? false : true
+    //     })
+    //   })
+    // },
+    async isOver3() {
+      let result = await this.DBArrayLength()
+      console.log('result:', result)
+      return result
+    }
   }
 }
 </script>
