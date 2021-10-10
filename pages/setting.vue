@@ -72,8 +72,8 @@ export default {
       monthRepetiton: '',
       oneTimeSaved: 0,
       json_data: {},
-      disableClickButton: undefined,
-      }
+      disableClickButton: false,
+    }
   },
   mounted: function() {
     this.DBArrayLength()
@@ -103,6 +103,7 @@ export default {
     },
     DBArrayLength() {
       let Ref = firebase.database().ref()
+      let self = this
       Ref.on('value', function(snapshot){
         const recentData = snapshot.val()
         const len = Object.keys(recentData).length
@@ -110,9 +111,9 @@ export default {
         console.log('lenOver:', len > 3 ? false : true )
         if (len >= 3) {
           console.log('set true !!')
-          this.disableClickButton = true
+          self.disableClickButton = true
         } else {
-          this.disableClickButton = false
+          self.disableClickButton = false
         }
       })
     },
