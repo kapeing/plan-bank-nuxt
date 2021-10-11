@@ -1,7 +1,7 @@
 <template>
   <main>
     <ul class="bank_area">
-      <li :class="[item.class]" v-for="(item, key) in saveItems" :key="key">
+      <li :class="[item.class]" v-for="(item, key) in fbData" :key="key">
         <span class="graph" :style="{ height: heights[key] }"></span>
         <div class="bank_box">
           <span class="curent_saved">{{ item.currentSaved }}</span>
@@ -12,6 +12,7 @@
           {{ json_data.savedName }} のために
           {{ json_data.oneTimeSaved }}円ずつ貯金！！
         </p>
+        <p>{{item.colors}}</p>
       </li>
     </ul>
     <div class="withdrawal">
@@ -53,7 +54,8 @@ export default {
       ],
       heights: [],
       json_data: {},
-      savedName: ""
+      savedName: "",
+      fbData: []
     };
   },
   mounted: function() {
@@ -65,19 +67,22 @@ export default {
       );
       this.heights.push(height);
     }
+    this.fetchData()
   },
   methods: {
     graphHeight(currentSaved, targetSaved) {
       return (currentSaved * TARGET_SAVED_HEIGHT) / targetSaved + "px";
     },
-    // fetchData () {
-    //  let Ref = firebase.database().ref()
-    //  Ref.on('value', function(snapshot){
-    //    const data = snapshot.val()
-    //    const len = Object.keys(data).length
-    //    len > 3 ? true : false 
-    //  })
-  //  },
+    fetchData () {
+      let Ref = firebase.database().ref()
+      let self = this
+      Ref.on('value', function(snapshot){
+        for (var x in snapshot.val()) {
+          self.fbData.push(snapshot.val()[x])
+        }
+        console.log("self.fbData:", self.fbData)
+      })
+   },
   }
 }
 </script>

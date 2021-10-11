@@ -78,13 +78,6 @@ export default {
   mounted: function() {
     this.DBArrayLength()
   },
-  // computed: {
-  //   disableClickButton() {
-  //     let result = this.DBArrayLength()
-  //     console.log('result:', result)
-  //     return result
-  //   },
-  // },
   methods: {
     addData() {
       let Ref = firebase.database().ref()
@@ -116,23 +109,6 @@ export default {
           self.disableClickButton = false
         }
       })
-    },
-    // DBArrayLength() {
-    //   return new Promise((resolve, reject) => {
-    //     let Ref = firebase.database().ref()
-    //     Ref.on('value', function(snapshot){
-    //       const recentData = snapshot.val()
-    //       const len = Object.keys(recentData).length
-    //       // console.log('len:', len)
-    //       // console.log('lenOver:', len > 3 ? false : true )
-    //       return len > 3 ? false : true
-    //     })
-    //   })
-    // },
-    async isOver3() {
-      let result = await this.DBArrayLength()
-      console.log('result:', result)
-      return result
     }
   }
 }
