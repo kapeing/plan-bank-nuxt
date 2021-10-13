@@ -1,18 +1,17 @@
 <template>
   <main>
     <ul class="bank_area">
-      <li :class="[item.class]" v-for="(item, key) in fbData" :key="key">
+      <li :class="[item.colors]" v-for="(item, key) in fbData" :key="key">
         <span class="graph" :style="{ height: heights[key] }"></span>
         <div class="bank_box">
           <span class="curent_saved">{{ item.currentSaved }}</span>
-          <span>/{{ json_data.targetSaved }}</span>
+          <span>/{{ item.targetSaved }}</span>
           <span>P-BANK</span>
         </div>
         <p style="color: #fff;">
-          {{ json_data.savedName }} のために
-          {{ json_data.oneTimeSaved }}円ずつ貯金！！
+          {{ item.savedName }} のために
+          {{ item.oneTimeSaved }}円ずつ貯金！！
         </p>
-        <p>{{item.colors}}</p>
       </li>
     </ul>
     <div class="withdrawal">
@@ -35,35 +34,20 @@ export default {
   name: "Top",
   data: function() {
     return {
-      saveItems: [
-        {
-          currentSaved: "86540",
-          targetSaved: "100000",
-          class: "pink"
-        },
-        {
-          currentSaved: "500",
-          targetSaved: "10000",
-          class: "blue"
-        },
-        {
-          currentSaved: "100000",
-          targetSaved: "200000",
-          class: "green"
-        }
-      ],
       heights: [],
-      json_data: {},
       savedName: "",
-      fbData: []
+      fbData: [],
+      len: 0,
+      currentSaved: 0
     };
   },
   mounted: function() {
     let height = "";
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < this.len; i++) {
+      this.currentSaved = this.fbData[i].oneTimeSaved * 4
       height = this.graphHeight(
-        this.saveItems[i].currentSaved,
-        this.saveItems[i].targetSaved
+        this.currentSaved,
+        this.targetSaved
       );
       this.heights.push(height);
     }
@@ -77,6 +61,7 @@ export default {
       let Ref = firebase.database().ref()
       let self = this
       Ref.on('value', function(snapshot){
+        self.len = Object.keys(snapshot.val()).length
         for (var x in snapshot.val()) {
           self.fbData.push(snapshot.val()[x])
         }
