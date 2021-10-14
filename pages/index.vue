@@ -7,9 +7,10 @@
           <span class="curent_saved">{{ item.currentSaved }}</span>
           <span>/{{ item.targetSaved }}</span>
           <span>P-BANK</span>
-        </div>
+        </div> 
         <p style="color: #fff;">
           {{ item.savedName }} のために
+          毎月 {{ item.monthRepetiton }}日に
           {{ item.oneTimeSaved }}円ずつ貯金！！
         </p>
       </li>
@@ -42,16 +43,17 @@ export default {
     };
   },
   mounted: function() {
+    this.fetchData()
     let height = "";
     for (let i = 0; i < this.len; i++) {
       this.currentSaved = this.fbData[i].oneTimeSaved * 4
+      console.log("this.currentSaved:",this.currentSaved)
       height = this.graphHeight(
         this.currentSaved,
         this.targetSaved
       );
       this.heights.push(height);
     }
-    this.fetchData()
   },
   methods: {
     graphHeight(currentSaved, targetSaved) {
