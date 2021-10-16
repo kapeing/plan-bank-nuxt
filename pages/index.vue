@@ -46,14 +46,13 @@ export default {
     this.fetchData()
     let height = "";
     for (let i = 0; i < this.len; i++) {
-      this.currentSaved = this.fbData[i].oneTimeSaved * 4
-      console.log("this.currentSaved:",this.currentSaved)
       height = this.graphHeight(
         this.currentSaved,
         this.targetSaved
       );
       this.heights.push(height);
     }
+    this.currentSavedDay ()
   },
   methods: {
     graphHeight(currentSaved, targetSaved) {
@@ -69,7 +68,19 @@ export default {
         }
         console.log("self.fbData:", self.fbData)
       })
-   },
+    },
+    currentSavedDay () {
+      var today = new Date
+      var day = today.getDate()
+      for (let i = 0; i < this.len; i++) {
+        var bankData = this.fbData[i]
+        console.log("bankData.monthRepetiton:",bankData.monthRepetiton)
+        if (bankData.monthRepetiton === 1){
+          this.currentSaved = bankData.currentSaved + bankData.oneTimeSaved
+          console.log(this.currentSaved)
+        }
+      }
+    }
   }
 }
 </script>

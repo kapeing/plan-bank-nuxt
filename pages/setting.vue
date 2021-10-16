@@ -59,7 +59,8 @@ export default {
         'targetSaved': this.targetSaved,
         'savedName': this.savedName,
         'monthRepetiton': this.monthRepetiton,
-        'oneTimeSaved': this.oneTimeSaved
+        'oneTimeSaved': this.oneTimeSaved,
+        'currentSaved': this.currentSaved
       }
       Ref.push( data ).then(response => {
           console.log(response)
