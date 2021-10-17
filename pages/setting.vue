@@ -9,7 +9,7 @@
   </fieldset>
   <fieldset>
     <label for="target_saved">目標金額</label>
-    <input type="number" id="target_saved" v-model="targetSaved">
+    <input type="number" id="target_saved" v-model.number="targetSaved">
   </fieldset>
   <fieldset>
     <label for="saved_name">貯金名</label>
@@ -23,7 +23,7 @@
   </fieldset>
   <fieldset>
     <label for="one_time_saved">1回の貯金額</label>
-    <input type="number" id="one_time_saved" v-model="oneTimeSaved">
+    <input type="number" id="one_time_saved" v-model.number="oneTimeSaved">
   </fieldset>
   <button @click="addData()" :disabled="disableClickButton">Click</button>
   <p>{{ colors }}</p>

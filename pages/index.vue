@@ -70,6 +70,7 @@ export default {
       })
     },
     currentSavedDay () {
+      console.log("最初")
       var today = new Date
       var day = today.getDate()
       for (let i = 0; i < this.len; i++) {
