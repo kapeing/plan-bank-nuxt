@@ -38,8 +38,7 @@ export default {
       heights: [],
       savedName: "",
       fbData: [],
-      len: 0,
-      currentSaved: 0
+      len: 0
     };
   },
   mounted: function() {
@@ -76,9 +75,9 @@ export default {
       for (let i = 0; i < this.len; i++) {
         var bankData = this.fbData[i]
         console.log("bankData.monthRepetiton:",bankData.monthRepetiton)
-        if (bankData.monthRepetiton === 1){
-          this.currentSaved = bankData.currentSaved + bankData.oneTimeSaved
-          console.log(this.currentSaved)
+        if (bankData.monthRepetiton === 15){
+          bankData.currentSaved += bankData.oneTimeSaved
+          console.log(bankData.currentSaved)
         }
       }
     }
