@@ -9,7 +9,7 @@
           <span>P-BANK</span>
         </div> 
         <p style="color: #fff;">
-          {{ item.savedName }} のために
+          <input v-if="edit" type="text" v-model="item.savedName"> <span :click="edit = true">{{ item.savedName }}</span> のために
           毎月 {{ item.monthRepetiton }}日に
           {{ item.oneTimeSaved }}円ずつ貯金！！
         </p>
@@ -38,7 +38,8 @@ export default {
       heights: [],
       savedName: "",
       fbData: [],
-      len: 0
+      len: 0,
+      edit: false
     };
   },
   mounted: function() {
@@ -69,16 +70,14 @@ export default {
       })
     },
     currentSavedDay () {
-      console.log("最初")
       var today = new Date
       var day = today.getDate()
       for (let i = 0; i < this.len; i++) {
         var bankData = this.fbData[i]
-        console.log("bankData.monthRepetiton:",bankData.monthRepetiton)
         if (bankData.monthRepetiton === 15){
           bankData.currentSaved += bankData.oneTimeSaved
-          console.log(bankData.currentSaved)
-        }
+
+}
       }
     }
   }
