@@ -9,7 +9,7 @@
           <span>P-BANK</span>
         </div> 
         <p style="color: #fff;">
-          <input v-if="edit" type="text" v-model="item.savedName"> <span :click="edit = true">{{ item.savedName }}</span> のために
+          <button @click="edit = true">編集</button><input v-if="edit" @keydown.enter="RenameSavedName" type="text" v-model="item.savedName"><span v-else>{{ item.savedName }}</span> のために
           毎月 {{ item.monthRepetiton }}日に
           {{ item.oneTimeSaved }}円ずつ貯金！！
         </p>
@@ -76,9 +76,17 @@ export default {
         var bankData = this.fbData[i]
         if (bankData.monthRepetiton === 15){
           bankData.currentSaved += bankData.oneTimeSaved
-
-}
+        }
       }
+    },
+    RenameSavedName () {
+      let Ref = firebase.database().ref()
+      let data = {
+        'savedName': this.savedName
+      }
+      Ref.push(data).then(response => {
+        console.log(response)
+      })
     }
   }
 }
