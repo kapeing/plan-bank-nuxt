@@ -9,7 +9,9 @@
           <span>P-BANK</span>
         </div> 
         <p style="color: #fff;">
-          <button @click="edit = true">編集</button><input v-if="edit" @keydown.enter="RenameSavedName" type="text" v-model="item.savedName"><span v-else>{{ item.savedName }}</span> のために
+          <button @click="edit = true">編集</button>
+          <input v-if="edit" @keydown.enter="RenameSavedName" type="text" v-model="item.savedName" @blur="edit = false" v-focus>
+          <span v-else>{{ item.savedName }}</span> のために
           毎月 {{ item.monthRepetiton }}日に
           {{ item.oneTimeSaved }}円ずつ貯金！！
         </p>
@@ -41,6 +43,13 @@ export default {
       len: 0,
       edit: false
     };
+  },
+  directives: {
+    focus: {
+      inserted: function (el) {
+        el.focus()
+      }
+    }
   },
   mounted: function() {
     this.fetchData()
@@ -84,9 +93,7 @@ export default {
       let data = {
         'savedName': this.savedName
       }
-      Ref.push(data).then(response => {
-        console.log(response)
-      })
+      Ref.child('-MmwkpiXTJI3CCWVmpeY').update(data)
     }
   }
 }
